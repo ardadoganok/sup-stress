@@ -1,6 +1,11 @@
 ESX = nil
 
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+Citizen.CreateThread(function()
+   while ESX == nil do
+       TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+       Citizen.Wait(0)
+    end
+end)
 
 AddEventHandler('esx_status:loaded', function(status)
 	TriggerEvent('esx_status:registerStatus', 'stress', 1000000, '#cadfff', function(status)
@@ -102,31 +107,31 @@ Citizen.CreateThread(function()
 	end
 end)
 
--- function AddStress(method, value, seconds)
---     if method:lower() == "instant" then
---         TriggerServerEvent("stress:add", value)
---     elseif method:lower() == "slow" then
---         local count = 0
---         repeat
---             TriggerServerEvent("stress:add", value/seconds)
---             count = count + 1
---             Citizen.Wait(1000)
---         until count == seconds
---     end
--- end
+function AddStress(method, value, seconds)
+    if method:lower() == "instant" then
+        TriggerServerEvent("stress:add", value)
+    elseif method:lower() == "slow" then
+        local count = 0
+        repeat
+            TriggerServerEvent("stress:add", value/seconds)
+            count = count + 1
+            Citizen.Wait(1000)
+        until count == seconds
+    end
+end
 
--- function RemoveStress(method, value, seconds)
---     if method:lower() == "instant" then
---         TriggerServerEvent("stress:remove", value)
---     elseif method:lower() == "slow" then
---         local count = 0
---         repeat
---             TriggerServerEvent("stress:remove", value/seconds)
---             count = count + 1
---             Citizen.Wait(1000)
---         until count == seconds
---     end
--- end
+function RemoveStress(method, value, seconds)
+    if method:lower() == "instant" then
+        TriggerServerEvent("stress:remove", value)
+    elseif method:lower() == "slow" then
+        local count = 0
+        repeat
+            TriggerServerEvent("stress:remove", value/seconds)
+            count = count + 1
+            Citizen.Wait(1000)
+        until count == seconds
+    end
+end
 
 function gozkapatma(time)
 	SendNUIMessage({
