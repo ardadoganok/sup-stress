@@ -16,6 +16,6 @@ AddEventHandler("stress:remove", function (value)
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
 
-    TriggerClientEvent("esx_status:remove", _source, "stress", value)
-	TriggerClientEvent('mythic_notify:client:SendAlert', source, {type = 'inform', text = 'Stresin azalıyor!'})
+        TriggerClientEvent("esx_status:remove", _source, "stress", value)
+        TriggerClientEvent('mythic_notify:client:SendAlert', source, {type = 'inform', text = 'Stresin azalıyor!'})
 end)
