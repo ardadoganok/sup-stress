@@ -2,22 +2,21 @@ fx_version 'adamant'
 game 'gta5'
 
 client_scripts {
-  'client/main.lua',
-  'config.lua'
+  'client/*.lua'
 }
 
 server_scripts {
-	'server/main.lua',
-  'config.lua'
+  '@mysql-async/lib/MySQL.lua',
+	'server/main.lua'
 }
 
 ui_page {
-	"html/ui.html",
+	"html/index.html",
 }
 
 files {
-  "html/ui.html",
-  "html/js/js.js"
+  "html/index.html",
+  "html/scripts.js"
 }
 
 exports {
