@@ -1,11 +1,6 @@
 ESX = nil
 
-Citizen.CreateThread(function()
-   while ESX == nil do
-       TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-       Citizen.Wait(0)
-    end
-end)
+TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 AddEventHandler('esx_status:loaded', function(status)
 	TriggerEvent('esx_status:registerStatus', 'stress', 1000000, '#cadfff', function(status)
@@ -16,7 +11,7 @@ AddEventHandler('esx_status:loaded', function(status)
 
 	Citizen.CreateThread(function()
 		while true do
-			Wait(10)
+			Wait(20)
 			local PlayerPed = GetPlayerPed(-1)
 			local stressVal  = 0
 
@@ -26,34 +21,34 @@ AddEventHandler('esx_status:loaded', function(status)
 
 			if StressVal == 1000000 then
 				Citizen.Wait(5000)
-				gozkapatma(math.random(3300,3600))
+				gozkapatma(5000)
 			elseif StressVal >= 900000 then
 				Citizen.Wait(8000)
-				gozkapatma(math.random(2900,3200))
+				gozkapatma(3200)
 			elseif StressVal >= 800000 then
 				Citizen.Wait(10000)
-				gozkapatma(math.random(2500,2800))
+				gozkapatma(2800)
 			elseif StressVal >= 700000 then
 				Citizen.Wait(15000)
-				gozkapatma(math.random(2200,2500))
+				gozkapatma(2500)
 			elseif StressVal >= 600000 then
 				Citizen.Wait(25000)
-				gozkapatma(math.random(1900,2100))
+				gozkapatma(2100)
 			elseif StressVal >= 500000 then
 				Citizen.Wait(40000)
-				gozkapatma(math.random(1600,1800))
+				gozkapatma(1800)
 			elseif StressVal >= 350000 then
 				Citizen.Wait(45000)
-				gozkapatma(math.random(1300,1500))
+				gozkapatma(1500)
 			elseif StressVal >= 200000 then
 				Citizen.Wait(50000)
-				gozkapatma(math.random(900,1200))
+				gozkapatma(1200)
 			elseif StressVal >= 125000 then
 				Citizen.Wait(55000)
-				gozkapatma(math.random(600,800))
+				gozkapatma(800)
 			elseif StressVal >= 75000 then
 				Citizen.Wait(60000)
-				gozkapatma(math.random(400,500))
+				gozkapatma(500)
 			else
 				Citizen.Wait(2000)
 			end
@@ -66,13 +61,11 @@ Citizen.CreateThread(function() -- Silah ile ateş edince
         local ped = GetPlayerPed(-1)
         local shooting = IsPedShooting(ped)
 
-        if Config.Shooting then
-            if shooting then
-				TriggerServerEvent("stress:add", 2500)
-				Wait(2000)
-			else
-				Wait(10)
-            end
+        if shooting then
+			TriggerServerEvent("stress:add", 2500)
+			Wait(2000)
+		else
+			Wait(20)
         end
     end
 end)
@@ -82,13 +75,11 @@ Citizen.CreateThread(function() -- Yumruk atınca
 		local ped = GetPlayerPed(-1)
 		local combat = IsPedInMeleeCombat(ped)
 
-		if Config.Combat then
-			if combat then
-				TriggerServerEvent("stress:add", 100)
-				Wait(5000)
-			else
-				Wait(10)
-			end
+		if combat then
+			TriggerServerEvent("stress:add", 100)
+			Wait(5000)
+		else
+			Wait(20)
 		end
 	end
 end)
@@ -106,6 +97,14 @@ Citizen.CreateThread(function()
 		Wait(5000)
 	end
 end)
+
+function gozkapatma(time)
+	SendNUIMessage({
+		action = "ui",
+		display = true,
+		time = time
+	})
+end
 
 function AddStress(method, value, seconds)
     if method:lower() == "instant" then
@@ -131,12 +130,4 @@ function RemoveStress(method, value, seconds)
             Citizen.Wait(1000)
         until count == seconds
     end
-end
-
-function gozkapatma(time)
-	SendNUIMessage({
-		action = "ui",
-		display = true,
-		time = time
-	})
 end
