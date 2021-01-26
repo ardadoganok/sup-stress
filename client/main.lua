@@ -8,7 +8,7 @@ Citizen.CreateThread(function()
 end)
 
 AddEventHandler('esx_status:loaded', function(status)
-	TriggerEvent('esx_status:registerStatus', 'stress', 1000000, '#cadfff', function(status)
+	TriggerEvent('esx_status:registerStatus', 'stress', 0, '#cadfff', function(status)
 		return false
 	end, function(status)
 		status.add(1)
